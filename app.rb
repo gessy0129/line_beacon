@@ -4,8 +4,8 @@ set :bind, '0.0.0.0'
 
 def client
   @client ||= Line::Bot::Client.new { |config|
-    config.channel_secret = '12b9b5e209d8e7845b51b88556d07cb8'
-    config.channel_token =  'Bh4pvhu8WAM6JWFPm8CdXBcMyEanmVZq48Y73Tvb/sT5xS43UCFNrbcC404oirSa4t+pJ1cO3yJkjcz7jcm/zpFuyqHUi1+yOsNckwLlz2J4UK94+3kcdEU2wZFCZ4V9TSg+DIaqQD8WApT7bYsSOgdB04t89/1O/w1cDnyilFU='
+    config.channel_secret = ENV["LINE_CHANNEL_SECRET"] 
+    config.channel_token  = ENV["LINE_CHANNEL_TOKEN"]
   }
 end
 
@@ -28,7 +28,7 @@ post '/callback' do  # botの設定時にWeb Hook URLに登録したパス。
     when Line::Bot::Event::Beacon
       message = {
         type: 'text',
-        text: 'おかえり！'
+        text: 'やぁ。げっしーだお！'
       }
       client.reply_message(event['replyToken'], message)
     end
