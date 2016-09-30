@@ -9,6 +9,10 @@ def client
   }
 end
 
+get '/' do
+  'HerokuでSinatraを使ってHello world!'
+end
+
 post '/callback' do  # botの設定時にWeb Hook URLに登録したパス。
   body = request.body.read
 
