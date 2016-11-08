@@ -22,9 +22,17 @@ post '/callback' do  # botの設定時にWeb Hook URLに登録したパス。
   end
 
   events = client.parse_events_from(body)
-  p events
   events.each { |event|
     case event
+    when Line::Bot::Event::Message
+      case event.type
+      when Line::Bot::Event::MessageType::Text
+        message = {
+          type: 'text',
+          text: event.message['text']
+        }
+        client.reply_message(event['replyToken'], message)
+      end
     when Line::Bot::Event::Beacon
       message = {
         type: 'text',
